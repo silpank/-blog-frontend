@@ -6,10 +6,11 @@ export const commonAPI = async(httpRequest,url,requestBody,requestHeader)=>{
         method:httpRequest,
         url,
         body:requestBody,
-        headers:reqHeader ? reqHeader : {
+        headers:requestHeader ? requestHeader : {
             "Content-Type" :'application/json'
         }
     }
+    console.log(reqConfig)
     //create axios instance
     return await axios(reqConfig).then((response)=>{
         return response

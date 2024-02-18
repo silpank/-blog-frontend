@@ -1,7 +1,7 @@
 import './App.css';
 import Header from './Components/Header'; 
 import Footer from './Components/Footer';
-import Home from './Pages/Home';
+import Auth from './Components/Auth';
 import { Routes, Route } from 'react-router-dom';
 import PageNotFound from './Pages/PageNotFound';
 
@@ -11,7 +11,7 @@ function App() {
       <Header />
       <section>
         <Routes>
-          <Route path='/' element={<Home />} />
+          <Route path='/' element={<Auth />} />
           <Route path='*' element={<PageNotFound />} />
           
         </Routes>

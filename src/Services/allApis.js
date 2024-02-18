@@ -3,7 +3,7 @@ import { baseUrl } from "./baseUrl";
 import { commonAPI } from "./commonAPI";
 
 //Register api call
-export const registerAPI = async()=>{
+export const registerAPI = async(user)=>{
     return await commonAPI("post",`${baseUrl}/register`,user,"")
 }
 
