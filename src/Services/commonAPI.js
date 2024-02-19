@@ -5,7 +5,7 @@ export const commonAPI = async(httpRequest,url,requestBody,requestHeader)=>{
     const reqConfig = {
         method:httpRequest,
         url,
-        body:requestBody,
+        data:requestBody,
         headers:requestHeader ? requestHeader : {
             "Content-Type" :'application/json'
         }

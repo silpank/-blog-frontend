@@ -4,6 +4,7 @@ import { loginAPI, registerAPI } from '../Services/allApis';
 import '../assets/styles/auth.css';
 
 function Home() {
+  const [registerSuccessfull, setRegister] = useState(false)
   const [isLoginForm, setLoginForm] = useState(true);
 
 
@@ -26,7 +27,7 @@ function Home() {
     setUserData({ ...userData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (async (e) => {
     e.preventDefault();
 
     try {
@@ -38,11 +39,19 @@ function Home() {
           return;
         }
 
-        loginAPI(userData)
-  
+        const result = await loginAPI(userData)
+        console.log(result);
+        if(result.status==200){
+          alert("Login successful")
+        }
+        else(
+          
+          alert("Invalid Login")
+        )
       }
   
       else {
+        
         if (!userData.email || !userData.password || !userData.confirmPassword || !userData.userName) {
           setError('Please fill in all fields.');
           return;
@@ -53,20 +62,28 @@ function Home() {
           return;
         }
 
-        registerAPI(userData)
+       const result = await registerAPI(userData)
+       if(result.status==200){
+        setRegister(true)
+      }
+      else(
         
+        alert("Server Error")
+      )
       }
     } catch(error) {
       setError('Operation failed. Please try again.');
       console.error(error)
     }
-  }
+  })
 
   return (
     <div className='container-fluid'>
+    {registerSuccessfull && <Alert variant="success">"registeration Successfull"</Alert>}
+
       <div className='wrapper'>
         <div className="title-text">
-          <div className={isLoginForm ? "title login" : "title signup"}>{isLoginForm ? 'Login' : 'Signup'}</div>
+          <div>{isLoginForm ? 'Login' : 'Signup'}</div>
         </div>
         <div className="form-container">
           <div className="slide-controls">
