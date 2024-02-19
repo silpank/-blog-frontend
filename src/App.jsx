@@ -13,7 +13,6 @@ function App() {
         <Routes>
           <Route path='/' element={<Auth />} />
           <Route path='*' element={<PageNotFound />} />
-          
         </Routes>
       </section>
       <Footer />

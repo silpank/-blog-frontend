@@ -20,6 +20,7 @@ function Home() {
   const toggleForm = () => {
     setLoginForm(!isLoginForm);
     setError('');
+    setRegister(false)
   };
 
   const handleChange = async (e) => {
@@ -29,7 +30,8 @@ function Home() {
 
   const handleSubmit = (async (e) => {
     e.preventDefault();
-
+    setError('')
+    setRegister(false)
     try {
 
       if (isLoginForm) {
@@ -62,14 +64,15 @@ function Home() {
           return;
         }
 
-       const result = await registerAPI(userData)
-       if(result.status==200){
-        setRegister(true)
-      }
-      else(
-        
-        alert("Server Error")
-      )
+        const result = await registerAPI(userData)
+        if(result.status==200){
+          setRegister(true)
+        } else if(result.response.status === 402) {
+          setError('User already Exist');
+        }
+        else{
+          throw(result)
+        }
       }
     } catch(error) {
       setError('Operation failed. Please try again.');
@@ -79,9 +82,10 @@ function Home() {
 
   return (
     <div className='container-fluid'>
-    {registerSuccessfull && <Alert variant="success">"registeration Successfull"</Alert>}
-
       <div className='wrapper'>
+        { registerSuccessfull && 
+          <Alert variant="success">Registeration Successfull</Alert>
+        }
         <div className="title-text">
           <div>{isLoginForm ? 'Login' : 'Signup'}</div>
         </div>

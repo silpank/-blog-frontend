@@ -7,10 +7,10 @@ import {
 function Header() {
   return (
     <div>
-<MDBNavbar light bgColor='light'>
+      <MDBNavbar light bgColor='light'>
         <MDBContainer fluid>
           <MDBNavbarBrand href='#'>
-          <i class="fa-solid fa-blog mx-2"></i>
+            <i class="fa-solid fa-blog mx-2"></i>
             Blog
           </MDBNavbarBrand>
         </MDBContainer>
