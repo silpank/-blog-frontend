@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { loginAPI, registerAPI } from '../Services/allApis';
 import '../assets/styles/auth.css';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
+  const location = useNavigate()
   const [registerSuccessfull, setRegister] = useState(false)
   const [isLoginForm, setLoginForm] = useState(true);
 
@@ -20,7 +22,6 @@ function Home() {
   const toggleForm = () => {
     setLoginForm(!isLoginForm);
     setError('');
-    setRegister(false)
   };
 
   const handleChange = async (e) => {
@@ -30,8 +31,7 @@ function Home() {
 
   const handleSubmit = (async (e) => {
     e.preventDefault();
-    setError('')
-    setRegister(false)
+
     try {
 
       if (isLoginForm) {
@@ -43,38 +43,39 @@ function Home() {
 
         const result = await loginAPI(userData)
         console.log(result);
-        if(result.status==200){
-          alert("Login successful")
+        if (result.status == 200) {
+          sessionStorage.setItem('existingUser', JSON.stringify(result.data.user))
+          sessionStorage.setItem('token', result.data.token)
+          location('/UserHome')
         }
-        else(
-          
+        else (
+
           alert("Invalid Login")
         )
       }
-  
+
       else {
-        
+
         if (!userData.email || !userData.password || !userData.confirmPassword || !userData.userName) {
           setError('Please fill in all fields.');
           return;
         }
-  
+
         if (userData.password !== userData.confirmPassword) {
           setError('Passwords do not match.');
           return;
         }
 
         const result = await registerAPI(userData)
-        if(result.status==200){
+        if (result.status == 200) {
           setRegister(true)
-        } else if(result.response.status === 402) {
-          setError('User already Exist');
         }
-        else{
-          throw(result)
-        }
+        else (
+
+          alert("Server Error")
+        )
       }
-    } catch(error) {
+    } catch (error) {
       setError('Operation failed. Please try again.');
       console.error(error)
     }
@@ -82,10 +83,9 @@ function Home() {
 
   return (
     <div className='container-fluid'>
+      {registerSuccessfull && <Alert variant="success">"registeration Successfull"</Alert>}
+
       <div className='wrapper'>
-        { registerSuccessfull && 
-          <Alert variant="success">Registeration Successfull</Alert>
-        }
         <div className="title-text">
           <div>{isLoginForm ? 'Login' : 'Signup'}</div>
         </div>
@@ -106,11 +106,11 @@ function Home() {
                   className="form-control"
                   placeholder="Email Address"
                   value={userData.email}
-                  onChange = {handleChange}
+                  onChange={handleChange}
                   required
                 />
               </div>
-              { !isLoginForm && (
+              {!isLoginForm && (
                 <div className="field mb-3">
                   <input
                     type="text"
@@ -118,8 +118,8 @@ function Home() {
                     className="form-control"
                     placeholder="Username"
                     value={userData.userName}
-                    onChange = {handleChange}
-                    required 
+                    onChange={handleChange}
+                    required
                   />
                 </div>
               )}
@@ -130,7 +130,7 @@ function Home() {
                   className="form-control"
                   placeholder="Password"
                   value={userData.password}
-                  onChange = {handleChange}
+                  onChange={handleChange}
                   required
                 />
               </div>
@@ -142,7 +142,7 @@ function Home() {
                     className="form-control"
                     placeholder="Confirm password"
                     value={userData.confirmPassword}
-                    onChange = {handleChange}
+                    onChange={handleChange}
                     required
                   />
                 </div>
