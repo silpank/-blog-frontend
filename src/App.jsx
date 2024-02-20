@@ -12,7 +12,7 @@ function App() {
       <Header />
       <section>
         <Routes>
-          <Route path='/' element={<Auth />} />
+          <Route path='/Auth' element={<Auth />} />
           <Route path='*' element={<PageNotFound />} />
           <Route path='/UserHome' element={<UserHome/>}/>
         </Routes>

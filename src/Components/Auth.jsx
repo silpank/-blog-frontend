@@ -83,9 +83,10 @@ function Home() {
 
   return (
     <div className='container-fluid'>
+     
+      <div className='wrapper'>
       {registerSuccessfull && <Alert variant="success">"registeration Successfull"</Alert>}
 
-      <div className='wrapper'>
         <div className="title-text">
           <div>{isLoginForm ? 'Login' : 'Signup'}</div>
         </div>
