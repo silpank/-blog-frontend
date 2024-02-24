@@ -1,62 +1,74 @@
-import React, { useEffect, useState } from 'react';
-import {allPostAPI} from '../Services/allApis';
+import React, { useState, useEffect } from 'react';
+import { allPostAPI } from '../Services/allApis';
 
-// Function to get all posts
-
-async function getAllPosts() {
-  try {
-    const response = await allPostAPI()
-    console.log(response.data); // Array of posts
-  } catch (error) {
-    console.error('Error fetching posts:', error);
-  }
+function TrendingBlogs({blogs}) {
+  return (
+    <div className="cards-container">
+      {blogs.map((blog,index) => (
+        <div key={index} className="card">
+          <h3>{blog.heading}</h3>
+          <p>{blog.content}</p>
+          <p>Likes: {blog.likes.length}</p>
+          <p>Author: {blog.author.userName}</p>
+        </div>
+      ))}
+    </div>
+  );
 }
 
+function Cards({blogs}) {
+  return (
+    <div className="cards-container">
+      {blogs.map((blog,index) => (
+        <div key={index} className="card">
+          <h3>{blog.heading}</h3>
+          <p>{blog.content}</p>
+          <p>Likes: {blog.likes.length}</p>
+          <p>Author: {blog.author.userName}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
 
+function BlogList() {
+  const [blogs, setBlogs] = useState([]);
+  const [trendingBlogs, setTrendingBlogs] = useState([]);
 
-// Trending Blog component
-const TrendingBlog = ({ title, image, content }) => (
-  <div className="trending-blog ">
-    <img style={{height:"200px", width:"300px"}}  src={image} alt={title} />
-    <h3>{title}</h3>
-    <p>{content}</p>
-  </div>
-);
+  useEffect(() => {
+    // Fetch blog data from your backend API
+    const fetchBlogs = async () => {
+      try {
+        const response = await allPostAPI();
+        if (response.status === 200) {
+          const sortedBlogs = [...response.data].sort((a, b) => b.likes - a.likes);
+          setBlogs(response.data);
+          setTrendingBlogs(sortedBlogs.slice(0, Math.min(sortedBlogs.length, 5)));
+        } else {
+          alert("Error Occurred");
+        }
+      } catch (error) {
+        alert("Error fetching blogs");
+        console.error('Error fetching blogs:', error);
+      }
+    };
 
-// Main Blog Component
-const Blog = () => {
-  useEffect(()=>{
-    getAllPosts()
-  },[])
-  // Dummy data for trending blogs and latest posts
-  const trendingBlogs = [
-    { title: 'Trending Blog 1', image: 'https://cdn.pixabay.com/photo/2017/10/25/21/02/flower-2889278_960_720.jpg', content: 'Lorem ipsum dolor sit amet.' },
-    { title: 'Trending Blog 2', image: 'url_to_image', content: 'Lorem ipsum dolor sit amet.' },
-    { title: 'Trending Blog 3', image: 'url_to_image', content: 'Lorem ipsum dolor sit amet.' },
-  ];
+    fetchBlogs();
 
-  
+  }, []);
 
   return (
-    <div className="blog">
-      <h2>Trending Blogs</h2>
-      <div className="trending-blogs d-flex">
-        {trendingBlogs.map((blog, index) => (
-          <TrendingBlog key={index} {...blog} />
-        ))}
+    <div className="blog-list">
+      <div className="trending-blogs">
+        <h2>Trending Blogs</h2>
+        <TrendingBlogs blogs={trendingBlogs} />
       </div>
-      
-    </div>
-  );
-};
-
-// UserHome Component
-const UserHome = () => {
-  return (
-    <div className='container-fluid'>
-      <Blog />
+      <div className="all-blogs">
+        <h2>All Posts</h2>
+        <Cards blogs={blogs} />
+      </div>
     </div>
   );
 }
 
-export default UserHome;
+export default BlogList;
