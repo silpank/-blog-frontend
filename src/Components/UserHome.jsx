@@ -2,25 +2,26 @@ import React, { useState, useEffect } from 'react';
 import { allPostAPI } from '../Services/allApis';
 import { Carousel } from 'react-bootstrap';
 import '../assets/styles/userhome.css';
+import '../assets/styles/carousal.css';
 
 function TrendingBlogs({ blogs }) {
   return (
     <div className="trending-blogs">
-      <h2>Trending Blogs</h2>
-      <Carousel>
+      <h2 className='trending-blogs-heading'>Trending</h2>
+      <Carousel className='trending-carousal' interval={2000}>
         {blogs.map((blog, index) => (
           <Carousel.Item key={index}>
             <div className="container">
               <div className="row">
                 <div className="col-md-6">
-                  <img style={{height:"500px",width:"500px"}} src={blog.image} alt="Blog" className="img-fluid" />
+                  <img src={blog.image} alt="Blog" className="img-fluid" />
                 </div>
-                <div className="col-md-6">
-                  <div className="card-body">
+                <div className="col-md-6 carousal-content">
+                  <div className="contents">
                     <h3>{blog.heading}</h3>
                     <p>{blog.content}</p>
                     <p>Likes: {blog.likes.length}</p>
-                    <p>Author: {blog.author && blog.author.userName}</p>
+                    <p>Author: {blog.author.userName}</p>
                   </div>
                 </div>
               </div>
@@ -35,16 +36,20 @@ function TrendingBlogs({ blogs }) {
 function Cards({ blogs }) {
   return (
     <div className="all-blogs">
-      <h2>All Posts</h2>
-      <div className="cards-container d-flex m">
+      <div className='row g-5 cards-container'>
+      <h2 className='all-blogs-header'>All Posts</h2>
         {blogs.map((blog, index) => (
-          <div key={index} className="card">
-            <img  style={{height:"200px",width:"600px"}}  src={blog.image} alt="Blog" className="blog-image" />
-            <div className="card-content">
-              <h3>{blog.heading}</h3>
-              <p>{blog.content}</p>
-              <p>Likes: {blog.likes.length}</p>
-              <p>Author: {blog.author && blog.author.userName}</p>
+          <div className='col-lg-4'>
+            <div key={index} className='cards'>
+              <div className='card-image'>
+                <img src={blog.image} alt="Blog" className="blog-image img-fluid" />
+              </div>
+              <div className="card-content">
+                <h3>{blog.heading}</h3>
+                <p>{blog.content}</p>
+                <p>Likes: {blog.likes.length}</p>
+                <p>Author: {blog.author && blog.author.userName}</p>
+              </div>
             </div>
           </div>
         ))}
@@ -86,8 +91,10 @@ function BlogList() {
 
   return (
     <div className="blog-list">
-      <TrendingBlogs blogs={trendingBlogs} />
-      <Cards blogs={blogs} />
+      <div className='container'>
+        <TrendingBlogs blogs={trendingBlogs} />
+        <Cards blogs={blogs} />
+      </div>
     </div>
   );
 }
