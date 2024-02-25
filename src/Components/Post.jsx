@@ -13,7 +13,6 @@ function Post() {
         const response = await getPostApi(postId);
         if (response.status === 200) {
           setBlog(response.data);
-          console.log(response.data)
         } else {
           alert("Error Occurred");
         }
