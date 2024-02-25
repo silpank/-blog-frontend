@@ -43,7 +43,6 @@ function Header() {
       const response = await addPostAPI(formData);
       setShow(false)
       if (response.status == 200) {
-        console.log(response.data);
         alert('Post Added Successfully')
         window.location.reload();
       } else {

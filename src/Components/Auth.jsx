@@ -42,7 +42,6 @@ function Home() {
         }
 
         const result = await loginAPI(userData)
-        console.log(result);
         if (result.status == 200) {
           sessionStorage.setItem('existingUser', JSON.stringify(result.data.user))
           sessionStorage.setItem('token', result.data.token)
