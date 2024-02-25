@@ -21,12 +21,11 @@ function TrendingBlogs({ blogs }) {
             <div className="container">
               <div className="row">
                 <div className="col-md-6">
-                  <img src={blog.image} alt="Blog" className="img-fluid" />
+                  <img src={`http://localhost:8000/uploads/${blog.image.split('\\')[1]}`} alt="Blog" className="img-fluid" />
                 </div>
                 <div className="col-md-6 carousal-content">
                   <div className="contents">
                     <h3>{blog.heading}</h3>
-                    <p>{blog.content}</p>
                     <p>Likes: {blog.likes.length}</p>
                     <p>Author: {blog.author.userName}</p>
                   </div>
@@ -59,7 +58,6 @@ function Cards({ blogs }) {
               </div>
               <div className="card-content">
                 <h3>{blog.heading}</h3>
-                <p>{blog.content}</p>
                 <p>Likes: {blog.likes.length}</p>
                 <p>Author: {blog.author && blog.author.userName}</p>
               </div>
