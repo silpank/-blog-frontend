@@ -80,7 +80,6 @@ function BlogList() {
         if (response.status === 200) {
           // Set all posts
           setBlogs(response.data);
-          console.log(response.data)
 
           // Sort blogs by likes and get the top 5
           const sortedBlogs = [...response.data].sort((a, b) => b.likes.length - a.likes.length);

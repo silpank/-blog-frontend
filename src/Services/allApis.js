@@ -37,3 +37,16 @@ export const addPostAPI = async (postData) => {
         throw error;
     }
 };
+
+export const getPostApi = async (postId) => {
+    try {
+        const token = sessionStorage.getItem("token");
+        const requestHeader = {
+            'x-access-token': token
+        };
+        return await commonAPI("get", `${baseUrl}/getPost/${postId}`, '', requestHeader)
+    } catch (error) {
+        console.error('Error adding post:', error);
+        throw error;
+    }
+}
