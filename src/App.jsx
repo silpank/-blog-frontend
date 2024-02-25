@@ -5,7 +5,7 @@ import Auth from './Components/Auth';
 import { Routes, Route } from 'react-router-dom';
 import PageNotFound from './Pages/PageNotFound';
 import UserHome from './Components/UserHome';
-
+import Post from './Components/Post'
 
 function App() {
   return (
@@ -16,6 +16,7 @@ function App() {
           <Route path='/Auth' element={<Auth />} />
           <Route path='*' element={<PageNotFound />} />
           <Route path='/UserHome' element={<UserHome/>}/>
+          <Route path='/post/:postId' element={<Post />}/>
         </Routes>
       </section>
       <Footer />

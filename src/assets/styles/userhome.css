@@ -16,7 +16,7 @@
     width: 100%;
   }
 
-  .cards-container {
-    
-  }
+.card-content {
+  word-break: break-word;
+}
   

@@ -5,38 +5,35 @@ import { commonAPI } from "./commonAPI";
 
 
 //Register api call
-export const registerAPI = async(user)=>{
-    return await commonAPI("post",`${baseUrl}/register`,user,"")
+export const registerAPI = async (user) => {
+    return await commonAPI("post", `${baseUrl}/register`, user, "")
 }
 
 //Login API call
-export const loginAPI = async(user) =>{
-    return await commonAPI("post",`${baseUrl}/login`,user,"")
+export const loginAPI = async (user) => {
+    return await commonAPI("post", `${baseUrl}/login`, user, "")
 }
- 
-// Get all Post
-export const allPostAPI = async() =>{
-  const token = sessionStorage.getItem("token")
-  const requestHeader = {
-    'x-access-token': token
-    };
 
-    return await commonAPI("get",`${baseUrl}/allPosts`,"",requestHeader)
+// Get all Post
+export const allPostAPI = async () => {
+    const token = sessionStorage.getItem("token")
+    const requestHeader = {
+        'x-access-token': token
+    }
+
+    return await commonAPI("get", `${baseUrl}/allPosts`, "", requestHeader)
 }
 
 // addPostBackend function to add a new post
-// export const addPostAPI = async (postData) => {
-//     try {
-//       const token = sessionStorage.getItem("token");
-//       const requestHeader = {
-//         'x-access-token': token
-//       };
-//       // Make a POST request to the backend to add a new post
-//       const response = await commonAPI("post", `${baseUrl}/newPost`, postData, requestHeader);
-//       return response; // You might want to handle the response in the caller
-//     } catch (error) {
-//       console.error('Error adding post:', error);
-//       throw error;
-//     }
-//   };
-    
+export const addPostAPI = async (postData) => {
+    try {
+        const token = sessionStorage.getItem("token");
+        const requestHeader = {
+            'x-access-token': token
+        };
+        return await commonAPI("post", `${baseUrl}/newPost`, postData, requestHeader)
+    } catch (error) {
+        console.error('Error adding post:', error);
+        throw error;
+    }
+};
