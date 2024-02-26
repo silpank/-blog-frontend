@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getPostApi } from '../Services/allApis';
+import { addLikeAPI, removeLikeAPI, addCommentAPI } from '../Services/allApis';
+import '../assets/styles/post.css'
+import { Button } from 'react-bootstrap';
 
 function Post() {
   const { postId } = useParams();
   const [blog, setBlog] = useState({});
-  const [liked, setLiked] = useState(false);
-  const [likesCount, setLikesCount] = useState(0);
+  const [showComment, setShowComment] = useState(false)
+  const [sampleValue, setSampleValue] = useState(false)
+  const [commentValue, setCommentValue] = useState('')
+  const userId = JSON.parse(sessionStorage.getItem("existingUser"))['_id'];
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -14,7 +19,6 @@ function Post() {
         const response = await getPostApi(postId);
         if (response.status === 200) {
           setBlog(response.data);
-          setLikesCount(response.data.likes); // Assuming likes count is provided in the response
         } else {
           alert("Error Occurred");
         }
@@ -24,63 +28,123 @@ function Post() {
       }
     };
     fetchBlog();
-  }, [postId]);
+  }, [sampleValue]);
 
-  const handleLike = () => {
-    setLiked(!liked);
-    setLikesCount(liked ? likesCount - 1 : likesCount + 1);
+  const handleLike = async (bool) => {
+    if (bool) {
+      try {
+
+        const response = await addCommentAPI(postId);
+        if (response.status === 200) {
+          setSampleValue(!sampleValue)
+        } else {
+          alert("Error Occurred");
+        }
+      } catch (error) {
+        alert("Error fetching blogs");
+        console.error('Error fetching blogs:', error);
+      }
+    } else {
+      try {
+        const response = await addLikeAPI(postId);
+        if (response.status === 200) {
+          setSampleValue(!sampleValue)
+        } else {
+          alert("Error Occurred");
+        }
+      } catch (error) {
+        alert("Error fetching blogs");
+        console.error('Error fetching blogs:', error);
+      }
+    }
   };
+
+  const toogleCommentSection = () => {
+    setShowComment(!showComment)
+  }
+
+  const handleCommentChange = (e) => {
+    setCommentValue(e.target.value)
+  }
+
+  const handleComment = async () => {
+    try {
+      const data = {
+        'comment': commentValue,
+        'date': "26-02-2024"
+      }
+      const response = await addCommentAPI(postId,data);
+      if (response.status === 200) {
+        setCommentValue('')
+        setSampleValue(!sampleValue)
+      } else {
+        alert("Error Occurred");
+      }
+    } catch (error) {
+      alert("Error fetching blogs");
+      console.error('Error fetching blogs:', error);
+    }
+  }
 
   return (
     <div >
-      {blog && (
+      {Object.keys(blog).length !== 0 && (
         <>
           <h2>{blog.heading}</h2>
-          {blog.image && (
-            <img
-              src={`http://localhost:8000/uploads/${blog.image.split('\\')[1]}`}
-              alt="Blog"
-              className="blog-image img-fluid"
-            />
-          )}
-          <div>
-            <span onClick={handleLike} style={{ cursor: 'pointer' }}>
-              {liked ? '❤️' : '🖤'} {/* Heart symbol */}
-            </span>
-            <span>{likesCount} Likes</span>
+          <img
+            src={`http://localhost:8000/uploads/${blog.image.split('\\')[1]}`}
+            alt="Blog"
+            className="blog-image img-fluid"
+          />
+          <div className='icon-section'>
+            <div className='like-icon-section'>
+              <span onClick={() => handleLike(blog.likes.some(like => like._id === userId))} className='like-icon'>
+                {blog.likes.some(like => like._id === userId) ? <i className="fa-solid fa-heart liked"></i> : <i className="fa-regular fa-heart"></i>}
+              </span>
+              <span>{blog.likes.length}</span>
+            </div>
+            <div className='comment-icon-section'>
+              <span className='comment-icon' onClick={toogleCommentSection}>
+                <i className="fa-regular fa-comment"></i>
+              </span>
+              <span>{blog.comments.length}</span>
+            </div>
           </div>
-          <CommentSection postId={postId} />
+          <div className='comments-section'>
+            {showComment && (
+              <>
+                {blog.comments.map((comment, index) => (
+                  <div key={index}>
+                    <CommentSection comment={comment} />
+                  </div>
+                ))}
+              </>
+            )}
+            <div>
+                <input
+                  type="text"
+                  name="comment"
+                  placeholder="Comment"
+                  value={commentValue}
+                  onChange={handleCommentChange}
+                />
+              <Button onClick={handleComment}>Comment</Button>
+            </div>
+          </div>
         </>
       )}
     </div>
   );
 }
 
-function CommentSection({ postId }) {
-  const [comments, setComments] = useState([]);
-  const [newComment, setNewComment] = useState('');
-
-  const handleAddComment = () => {
-    setComments([...comments, newComment]);
-    setNewComment('');
-  };
+function CommentSection({ comment }) {
 
   return (
     <div>
-      <h3>Comments</h3>
       <div>
-        {comments.map((comment, index) => (
-          <div key={index}>{comment}</div>
-        ))}
-      </div>
-      <div>
-        <input
-          type="text"
-          placeholder="Add a comment..."
-          value={newComment}
-          onChange={(e) => setNewComment(e.target.value)}
-        />
-        <button onClick={handleAddComment}>Post</button>
+        <div className='commentedUser'>{comment.commenter.userName}</div>
+        <div className='commentedDate'>{comment.date}</div>
+        <div className='comment'>{comment.comment}</div>
       </div>
     </div>
   );

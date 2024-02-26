@@ -95,7 +95,6 @@ function BlogList() {
         console.error('Error fetching blogs:', error);
       }
     };
-
     fetchBlogs();
   }, []);
 

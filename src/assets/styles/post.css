@@ -1,0 +1,19 @@
+i {
+    cursor: pointer;
+}
+
+.icon-section {
+    display: flex;
+    gap: 16px;
+}
+i.liked {
+    color: #e30d0d;
+}
+
+.like-icon,.comment-icon {
+    margin-right: 5px;
+}
+
+input {
+    height: 35px;
+}

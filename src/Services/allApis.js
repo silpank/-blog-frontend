@@ -58,7 +58,20 @@ export const addLikeAPI = async (postId) => {
         const requestHeader = {
             'x-access-token': token
         };
-        return await commonAPI("post", `${baseUrl}/addLike/${postId}`, '', requestHeader);
+        return await commonAPI("post", `${baseUrl}/${postId}/addLike`, '', requestHeader);
+    } catch (error) {
+        console.error('Error adding like:', error);
+        throw error;
+    }
+};
+
+export const removeLikeAPI = async (postId) => {
+    try {
+        const token = sessionStorage.getItem("token");
+        const requestHeader = {
+            'x-access-token': token
+        };
+        return await commonAPI("post", `${baseUrl}/${postId}/removeLike`, '', requestHeader);
     } catch (error) {
         console.error('Error adding like:', error);
         throw error;
@@ -72,7 +85,7 @@ export const addCommentAPI = async (postId, commentData) => {
         const requestHeader = {
             'x-access-token': token
         };
-        return await commonAPI("post", `${baseUrl}/addComment/${postId}`, commentData, requestHeader);
+        return await commonAPI("post", `${baseUrl}/${postId}/newComment`, commentData, requestHeader);
     } catch (error) {
         console.error('Error adding comment:', error);
         throw error;
