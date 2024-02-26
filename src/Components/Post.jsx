@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getPostApi } from '../Services/allApis';
-import CommentSection from './CommonSection'; // Assuming you have a CommentSection component
 
 function Post() {
   const { postId } = useParams();
@@ -28,9 +27,7 @@ function Post() {
   }, [postId]);
 
   const handleLike = () => {
-    // Toggle the like state
     setLiked(!liked);
-    // Increment or decrement likes count based on the current liked state
     setLikesCount(liked ? likesCount - 1 : likesCount + 1);
   };
 
@@ -52,15 +49,39 @@ function Post() {
             </span>
             <span>{likesCount} Likes</span>
           </div>
-          <div>
-            <span>💬</span> {/* Comment symbol */}
-            {/* Render comment count if available */}
-            {blog.comments && <span>{blog.comments.length} Comments</span>}
-          </div>
           <CommentSection postId={postId} />
         </>
       )}
-      {/* Other post content */}
+    </div>
+  );
+}
+
+function CommentSection({ postId }) {
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState('');
+
+  const handleAddComment = () => {
+    setComments([...comments, newComment]);
+    setNewComment('');
+  };
+
+  return (
+    <div>
+      <h3>Comments</h3>
+      <div>
+        {comments.map((comment, index) => (
+          <div key={index}>{comment}</div>
+        ))}
+      </div>
+      <div>
+        <input
+          type="text"
+          placeholder="Add a comment..."
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+        />
+        <button onClick={handleAddComment}>Post</button>
+      </div>
     </div>
   );
 }
