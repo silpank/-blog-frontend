@@ -32,7 +32,7 @@ function Post() {
   };
 
   return (
-    <div>
+    <div >
       {blog && (
         <>
           <h2>{blog.heading}</h2>
