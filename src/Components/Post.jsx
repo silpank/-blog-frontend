@@ -34,7 +34,7 @@ function Post() {
     if (bool) {
       try {
 
-        const response = await addCommentAPI(postId);
+        const response = await removeLikeAPI(postId);
         if (response.status === 200) {
           setSampleValue(!sampleValue)
         } else {
@@ -87,7 +87,15 @@ function Post() {
   }
 
   return (
-    <div >
+    <div className="post-container">
+      <div className="user-info">
+        {/* User photo */}
+        <img src={"https://st2.depositphotos.com/2783505/11506/i/600/depositphotos_115061800-stock-photo-passport-photo-of-a-young.jpg"} alt="User" className="user-photo" />
+        {/* Username */}
+        <div className="username">{blog.userName}</div>
+        {/* Date of post */}
+        <div className="post-date">{blog.date}</div>
+      </div>
       {Object.keys(blog).length !== 0 && (
         <>
           <h2>{blog.heading}</h2>
@@ -138,16 +146,14 @@ function Post() {
 }
 
 function CommentSection({ comment }) {
-
   return (
     <div>
       <div>
-        <div className='commentedUser'>{comment.commenter.userName}</div>
+        <div className='commentedUser'>{comment.commenter?.userName || 'Unknown User'}</div>
         <div className='commentedDate'>{comment.date}</div>
         <div className='comment'>{comment.comment}</div>
       </div>
     </div>
   );
 }
-
 export default Post;

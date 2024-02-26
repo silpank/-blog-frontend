@@ -17,3 +17,45 @@ i.liked {
 input {
     height: 35px;
 }
+.post-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+  }
+  
+  .user-info {
+    margin-bottom: 20px;
+  }
+  
+  .user-photo {
+    width: 100px; /* Adjust as needed */
+    height: 100px; /* Adjust as needed */
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .post-content {
+    max-width: 600px; /* Adjust as needed */
+  }
+  
+  .comment-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 20px;
+  }
+  
+  .comment-wrapper {
+    display: flex;
+    align-items: center;
+  }
+  
+  .comment-date {
+    margin-left: 10px;
+  }
+  
+  /* Additional styling for other elements if needed */
+  
