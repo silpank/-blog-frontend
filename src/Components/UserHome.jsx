@@ -18,7 +18,7 @@ function TrendingBlogs({ blogs }) {
       <Carousel className='trending-carousal' interval={2000}>
         {blogs.map((blog, index) => (
           <Carousel.Item key={index} onClick={() => handleBlogClick(blog._id)}>
-            <div className="container">
+            <div className="container" style={{ cursor: 'pointer' }}>
               <div className="row">
                 <div className="col-md-6">
                   <img src={`http://localhost:8000/uploads/${blog.image.split('\\')[1]}`} alt="Blog" className="img-fluid" />

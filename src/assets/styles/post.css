@@ -1,3 +1,7 @@
+.post-container {
+    padding: 30px;
+}
+
 i {
     cursor: pointer;
 }
@@ -6,56 +10,78 @@ i {
     display: flex;
     gap: 16px;
 }
+
 i.liked {
     color: #e30d0d;
 }
 
-.like-icon,.comment-icon {
+.like-icon,
+.comment-icon {
     margin-right: 5px;
 }
 
 input {
     height: 35px;
 }
-.post-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    text-align: center;
-  }
-  
-  .user-info {
-    margin-bottom: 20px;
-  }
-  
-  .user-photo {
-    width: 100px; /* Adjust as needed */
-    height: 100px; /* Adjust as needed */
+
+.user-photo img {
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
-    object-fit: cover;
-  }
-  
-  .post-content {
-    max-width: 600px; /* Adjust as needed */
-  }
-  
-  .comment-container {
+    object-fit: contain;
+}
+
+.blog-image {
+    border-radius: 5px;
+}
+
+.blog-content {
+    font-size: 16px;
+    text-align: left;
+    word-break: break-word;
+}
+
+.add-comment {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-top: 20px;
-  }
-  
-  .comment-wrapper {
+    gap: 10px;
+}
+
+.comment-div {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 15px 20px rgba(0,0,0,0.1);
+}
+
+.comments {
+    text-align: left;
+}
+
+.comment-input {
+    height: 40px;
+}
+
+.comment-button {
+    height: 40px;
+}
+
+.commentedheader {
     display: flex;
+    gap: 20px;
     align-items: center;
-  }
-  
-  .comment-date {
-    margin-left: 10px;
-  }
-  
-  /* Additional styling for other elements if needed */
-  
+    line-height: normal;
+}
+
+.commenter-image {
+    width: 35px;
+    height: 40px;
+    object-fit:fill;
+    border-radius: 50%;
+}
+
+.comment {
+    word-break: break-word;
+    font-size: 16px;
+}
+
+/* Additional styling for other elements if needed */
