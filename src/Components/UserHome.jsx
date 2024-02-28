@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Importing useNavigate
-import { Carousel } from 'react-bootstrap'; // Importing Carousel
+import { useNavigate } from 'react-router-dom';
+import { Carousel } from 'react-bootstrap';
 import { allPostAPI } from '../Services/allApis';
 import '../assets/styles/userhome.css';
 import '../assets/styles/carousal.css';
@@ -26,9 +26,11 @@ function TrendingBlogs({ blogs }) {
                 <div className="col-md-6 carousal-content">
                   <div className="contents">
                     <h3>{blog.heading}</h3>
-                    <p><i className="fa-solid fa-heart liked me-1"></i> {blog.likes.length}</p>
-                    <p> <i className="fa-regular fa-comment me-1"></i>{blog.comments.length}</p>
-                    <p>Author: {blog.author.userName}</p>
+                    <p>
+                      <i className="fa-solid fa-heart liked me-1"></i> {blog.likes.length}&nbsp;&nbsp;
+                      <i className="fa-regular fa-comment me-1"></i>{blog.comments.length}
+                    </p>
+                    <p>{blog.author.userName}</p>
                   </div>
                 </div>
               </div>
@@ -59,9 +61,11 @@ function Cards({ blogs }) {
               </div>
               <div className="card-content">
                 <h3>{blog.heading}</h3>
-                <p><i className="fa-solid fa-heart liked me-1"></i>{blog.likes.length}</p>
-                <p><i className="fa-regular fa-comment me-1"></i>{blog.comments.length}</p>
-                <p>Author: {blog.author && blog.author.userName}</p>
+                <p>
+                  <i className="fa-solid fa-heart liked me-1"></i>{blog.likes.length}&nbsp;&nbsp;
+                  <i className="fa-regular fa-comment me-1"></i>{blog.comments.length}
+                </p>
+                <p>{blog.author && blog.author.userName}</p>
               </div>
             </div>
           </div>
