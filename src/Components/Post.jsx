@@ -19,6 +19,7 @@ function Post() {
       try {
         const response = await getPostApi(postId);
         if (response.status === 200) {
+          console.log(response.data)
           setBlog(response.data);
         } else {
           alert("Error Occurred");
@@ -101,17 +102,17 @@ function Post() {
             <div className="user-info text-center mb-4">
               {/* User photo */}
               <div className='user-photo'>
-                <img src={"https://st2.depositphotos.com/2783505/11506/i/600/depositphotos_115061800-stock-photo-passport-photo-of-a-young.jpg"} alt="User" className="img-fluid" />
+                <img src={`data:${blog.author.image.contentType};base64,${blog.author.image.data}`} alt="User" className="img-fluid" />
               </div>
               {/* Username */}
-              <div className="username">{blog.author.userName}</div>
+              <div className="username">{blog.author.fullName === '' ? blog.author.userName : blog.author.fullName}</div>
               {/* Date of post */}
               <div className="post-date">{blog.date}</div>
             </div>
             <div className='post-info text-center'>
               <h2 className='mb-4'>{blog.heading}</h2>
               <img
-                src={`http://localhost:8000/uploads/${blog.image.split('\\')[1]}`}
+                src={`data:${blog.image.contentType};base64,${blog.image.data}`}
                 alt="Blog"
                 className="blog-image img-fluid w-100 mb-4"
               />
@@ -166,9 +167,9 @@ function CommentSection({ comment }) {
   return (
     <div className='comments'>
         <div className='commentedheader'>
-          <img src={"https://st2.depositphotos.com/2783505/11506/i/600/depositphotos_115061800-stock-photo-passport-photo-of-a-young.jpg"} alt="User" className="commenter-image img-fluid" />
+          <img src={`data:${comment.commenter.image.contentType};base64,${comment.commenter.image.data}`} alt="User" className="commenter-image img-fluid" />
           <div className='user-and-date'>
-            <p className='commentedUser'>{comment.commenter.userName}</p>
+            <p className='commentedUser'>{comment.commenter.fullName === '' ? comment.commenter.userName : comment.commenter.fullName}</p>
             <p commentedDate>{comment.date}</p>
           </div>
         </div>
