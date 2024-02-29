@@ -110,11 +110,17 @@ function Post() {
             </div>
             <div className='post-info text-center'>
               <h2 className='mb-4'>{blog.heading}</h2>
-              <img
+              {
+                    blog.image && (
+                      <img
                 src={`http://localhost:8000/uploads/${blog.image.split('\\')[1]}`}
                 alt="Blog"
                 className="blog-image img-fluid w-100 mb-4"
               />
+                    )
+
+                  }
+              
               <p className='blog-content'>{blog.content}</p>
               <hr className='hr-ruler' />
               <div className='icon-section'>

@@ -17,11 +17,17 @@ function TrendingBlogs({ blogs }) {
       <h2 className='trending-blogs-heading'>Trending</h2>
       <Carousel className='trending-carousal' interval={2000}>
         {blogs.map((blog, index) => (
-          <Carousel.Item key={index} onClick={() => handleBlogClick(blog._id)}>
+          Object.keys(blog).length !== 0 && (
+            <Carousel.Item key={index} onClick={() => handleBlogClick(blog._id)}>
             <div className="container" style={{ cursor: 'pointer' }}>
               <div className="row">
                 <div className="col-md-6">
-                  <img src={`http://localhost:8000/uploads/${blog.image.split('\\')[1]}`} alt="Blog" className="img-fluid" />
+                  {
+                    blog.image && (
+                      <img src={`http://localhost:8000/uploads/${blog.image.split('\\')[1]}`} alt="Blog" className="img-fluid" />
+                    )
+
+                  }
                 </div>
                 <div className="col-md-6 carousal-content">
                   <div className="contents">
@@ -34,6 +40,7 @@ function TrendingBlogs({ blogs }) {
               </div>
             </div>
           </Carousel.Item>
+          )
         ))}
       </Carousel>
     </div>
@@ -55,7 +62,12 @@ function Cards({ blogs }) {
           <div className='col-lg-4' key={index} onClick={() => handleBlogClick(blog._id)}>
             <div className='cards'>
               <div className='card-image'>
-                <img src={`http://localhost:8000/uploads/${blog.image.split('\\')[1]}`} alt="Blog" className="blog-image img-fluid" />
+              {
+                    blog.image && (
+                      <img src={`http://localhost:8000/uploads/${blog.image.split('\\')[1]}`} alt="Blog" className="img-fluid" />
+                    )
+
+                  }
               </div>
               <div className="card-content">
                 <h3>{blog.heading}</h3>
