@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { MDBContainer, MDBNavbar, MDBNavbarBrand } from 'mdb-react-ui-kit';
 import { Button, Alert } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
@@ -12,6 +13,7 @@ function Header() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
+  const navigate = useNavigate();
 
   const handleClose = () => {
     setShow(false);
@@ -54,6 +56,10 @@ function Header() {
     }
   };
 
+  const logOut = async() => {
+    navigate(`/Auth`);
+  }
+
   return (
     <div>
       <MDBNavbar light bgColor='light'>
@@ -63,7 +69,11 @@ function Header() {
             Blog
           </MDBNavbarBrand>
           {(pathname !== '/auth' && pathname !== '/') && (
+            <div className='header-buttons'>
             <Button onClick={handleShow}>New Post</Button>
+            <Button variant="outline-primary" onClick={logOut}>LogOut</Button>
+            </div>
+            
           )}
         </MDBContainer>
       </MDBNavbar>

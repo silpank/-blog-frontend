@@ -3,8 +3,6 @@ import { useParams } from 'react-router-dom';
 import { getPostApi } from '../Services/allApis';
 import { addLikeAPI, removeLikeAPI, addCommentAPI } from '../Services/allApis';
 import '../assets/styles/post.css'
-import { Button } from 'react-bootstrap';
-import { InputGroup } from 'react-bootstrap';
 
 function Post() {
   const { postId } = useParams();
@@ -20,6 +18,7 @@ function Post() {
         const response = await getPostApi(postId);
         if (response.status === 200) {
           setBlog(response.data);
+          console.log(response.data)
         } else {
           alert("Error Occurred");
         }
@@ -101,10 +100,14 @@ function Post() {
             <div className="user-info text-center mb-4">
               {/* User photo */}
               <div className='user-photo'>
-                <img src={"https://st2.depositphotos.com/2783505/11506/i/600/depositphotos_115061800-stock-photo-passport-photo-of-a-young.jpg"} alt="User" className="img-fluid" />
+                {
+                  blog.author.image && (
+                    <img src={`http://localhost:8000/uploads/${blog.author.image.split('\\')[1]}`} alt="User" className="img-fluid" />
+                  )
+                }
               </div>
               {/* Username */}
-              <div className="username">{blog.author.userName}</div>
+              <div className="username">{blog.author.fullName === '' ? blog.author.userName : blog.author.fullName}</div>
               {/* Date of post */}
               <div className="post-date">{blog.date}</div>
             </div>
@@ -172,9 +175,9 @@ function CommentSection({ comment }) {
   return (
     <div className='comments'>
         <div className='commentedheader'>
-          <img src={"https://st2.depositphotos.com/2783505/11506/i/600/depositphotos_115061800-stock-photo-passport-photo-of-a-young.jpg"} alt="User" className="commenter-image img-fluid" />
+          <img src={`http://localhost:8000/uploads/${comment.commenter.image.split('\\')[1]}`} alt="User" className="commenter-image img-fluid" />
           <div className='user-and-date'>
-            <p className='commentedUser'>{comment.commenter.userName}</p>
+          <p className='commentedUser'>{comment.commenter.fullName === '' ? comment.commenter.userName : comment.commenter.fullName}</p>
             <p commentedDate>{comment.date}</p>
           </div>
         </div>

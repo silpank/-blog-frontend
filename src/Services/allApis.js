@@ -92,3 +92,11 @@ export const addCommentAPI = async (postId, commentData) => {
     }
 };
 
+export const addDetailsApi = async (postData) => {
+    const token = sessionStorage.getItem("token")
+    const requestHeader = {
+        'x-access-token': token
+    }
+
+    return await commonAPI("patch", `${baseUrl}/addUserDetails`, postData, requestHeader)
+}
